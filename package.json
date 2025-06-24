@@ -1,0 +1,44 @@
+{
+  "name": "f8-k12-nodejs-2",
+  "version": "1.0.0",
+  "main": "server.js",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "module-alias": "^2.2.3",
+    "mysql2": "^3.14.1",
+    "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^9.8.0",
+    "sequelize-cli": "^6.6.3"
+  },
+  "_moduleAliases": {
+    "@": "./src"
+  },
+  "scripts": {
+    "dev": "nodemon server.js",
+    "queue": "node --watch ./src/workers/queueWorker.js",
+    "schedule": "node --watch ./src/utils/scheduler.js",
+    "start": "node server.js",
+    "db:migrate": "sequelize-cli db:migrate",
+    "db:migrate:undo:all": "sequelize-cli db:migrate:undo:all",
+    "db:seed": "sequelize-cli db:seed",
+    "db:seed:undo": "sequelize-cli db:seed:undo",
+    "db:seed:all": "sequelize-cli db:seed:all",
+    "db:seed:undo:all": "sequelize-cli db:seed:undo:all",
+    "migration:create": "sequelize-cli migration:create",
+    "seed:generate": "sequelize-cli seed:generate"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nivx18818/f8-k12-nodejs-2.git"
+  },
+  "author": "NguyenXuanVinh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nivx18818/f8-k12-nodejs-2/issues"
+  },
+  "homepage": "https://github.com/nivx18818/f8-k12-nodejs-2#readme",
+  "description": ""
+}
