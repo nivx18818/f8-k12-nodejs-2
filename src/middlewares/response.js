@@ -10,7 +10,7 @@ const response = (req, res, next) => {
     });
   };
 
-  res.error = (status, message) => {
+  res.error = (status, message, err) => {
     console.error(err.stack);
 
     return res.status(status ?? 500).json({
