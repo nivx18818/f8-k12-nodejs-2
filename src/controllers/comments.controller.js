@@ -7,13 +7,13 @@ exports.getList = asyncHandler(async (req, res) => {
   return res.success(200, comments);
 });
 
-exports.getById = asyncHandler(async (req, res) => {
-  return res.success(200, req.comment);
+exports.getByPostId = asyncHandler(async (req, res) => {
+  const comments = await commentsService.getByPostId(req.post.id);
+  return comments;
 });
 
-exports.getByPostId = asyncHandler(async (req, res) => {
-  const comment = await commentsService.getByPostId(req.post.id);
-  return comment;
+exports.getById = asyncHandler(async (req, res) => {
+  return res.success(200, req.comment);
 });
 
 exports.create = asyncHandler(async (req, res) => {

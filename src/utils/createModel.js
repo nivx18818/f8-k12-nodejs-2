@@ -11,8 +11,6 @@ const createModel = (configFn) => {
       tableName: tableName,
       timestamps: true,
       underscored: true,
-      createdAt: "created_at",
-      updatedAt: "updated_at",
       ...options,
     });
     return Model;

@@ -15,10 +15,8 @@ fs.readdirSync(__dirname)
       file.slice(-9) === ".route.js"
   )
   .forEach((file) => {
-    const filename = path.join(__dirname, file);
-    const subRouter = require(filename);
-
-    const resource = filename.split(".")[0]; // Ex: posts.route.js -> posts
+    const subRouter = require(path.join(__dirname, file));
+    const resource = file.split(".")[0]; // Ex: posts.route.js -> posts
     const modelName = resource[0].toUpperCase() + resource.slice(1, -1); // Ex: posts -> Post
     const model = models[modelName];
 

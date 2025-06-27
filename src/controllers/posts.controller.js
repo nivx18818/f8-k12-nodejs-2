@@ -7,6 +7,11 @@ exports.getList = asyncHandler(async (req, res) => {
   return res.success(200, posts);
 });
 
+exports.getByTopicId = asyncHandler(async (req, res) => {
+  const posts = await postsService.getByTopicId();
+  return posts;
+});
+
 exports.getById = asyncHandler(async (req, res) => {
   return res.success(200, req.post);
 });

@@ -3,39 +3,41 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("comments", {
-      id: {
-        type: Sequelize.INTEGER({ unsigned: true }),
-        primaryKey: true,
-        autoIncrement: true,
-      },
+    await queryInterface.createTable("topic_post", {
       post_id: {
-        type: Sequelize.INTEGER({ unsigned: true }),
+        type: Sequelize.INTEGER.UNSIGNED,
         allowNull: false,
         references: {
           model: "posts",
           key: "id",
         },
+        onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
-      content: {
-        type: Sequelize.TEXT,
+      topic_id: {
+        type: Sequelize.INTEGER.UNSIGNED,
         allowNull: false,
+        references: {
+          model: "topics",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
       created_at: {
-        type: Sequelize.DATE,
         allowNull: false,
+        type: Sequelize.DATE,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
       updated_at: {
-        type: Sequelize.DATE,
         allowNull: false,
+        type: Sequelize.DATE,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
     });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("comments");
+    await queryInterface.dropTable("topic_post");
   },
 };
