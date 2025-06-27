@@ -1,6 +1,6 @@
 const createModel = require("@/utils/createModel");
 
-module.exports = createModel((DataTypes) => ({
+const Topic = createModel((DataTypes) => ({
   modelName: "Topic",
   tableName: "topics",
   slug: {
@@ -13,3 +13,12 @@ module.exports = createModel((DataTypes) => ({
   },
   description: DataTypes.TEXT,
 }));
+
+Topic.associate = (models) => {
+  Topic.belongsToMany(models.Post, {
+    through: "topic_post",
+    foreignKey: "topic_id",
+  });
+};
+
+module.exports = Topic;

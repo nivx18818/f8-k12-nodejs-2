@@ -1,6 +1,6 @@
 const createModel = require("@/utils/createModel");
 
-module.exports = createModel((DataTypes) => ({
+const Comment = createModel((DataTypes) => ({
   modelName: "Comment",
   tableName: "comments",
   postId: {
@@ -12,3 +12,9 @@ module.exports = createModel((DataTypes) => ({
     allowNull: false,
   },
 }));
+
+Comment.associate = (models) => {
+  Comment.belongsTo(models.Post);
+};
+
+module.exports = Comment;

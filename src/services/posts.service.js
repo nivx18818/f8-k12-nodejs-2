@@ -1,7 +1,17 @@
-const { Post } = require("@/db/models");
+const { Post, Topic, sequelize } = require("@/db/models");
 
 exports.getAll = async (page = 1, limit = 10) => {
   const posts = await Post.findAll({ limit, offset: (page - 1) * limit });
+  return posts;
+};
+
+exports.getByTopicId = async (topicId) => {
+  const posts = await Post.findAll({
+    include: {
+      model: Topic,
+      where: { id: topicId },
+    },
+  });
   return posts;
 };
 
@@ -11,8 +21,19 @@ exports.getById = async (id) => {
 };
 
 exports.create = async (data) => {
-  const newPost = await Post.create(data);
-  return newPost;
+  const { topicIds, ...postData } = data;
+
+  const result = await sequelize.transaction(async (t) => {
+    const newPost = await Post.create(postData, { transaction: t });
+
+    if (topicIds && topicIds.length > 0) {
+      await newPost.setTopics(topicIds, { transaction: t });
+    }
+
+    return newPost;
+  });
+
+  return Post.findByPk(result.id, { include: [Topic] });
 };
 
 exports.update = async (id, data) => {
