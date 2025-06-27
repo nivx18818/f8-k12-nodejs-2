@@ -1,31 +1,27 @@
 const postsService = require("@/services/posts.service");
-const response = require("@/utils/response");
-const { throw404 } = require("@/utils/throwError");
+const asyncHandler = require("@/utils/asyncHandler");
 
-exports.getList = async (req, res) => {
+exports.getList = asyncHandler(async (req, res) => {
   const { page, limit } = req.query;
   const posts = await postsService.getAll(page, limit);
-  return response.success(res, 200, posts);
-};
+  return res.success(200, posts);
+});
 
-exports.getById = async (req, res) => {
-  const post = await postsService.getById(req.params.id);
-  if (!post) throw404();
-  return response.success(res, 200, req.post);
-};
+exports.getById = asyncHandler(async (req, res) => {
+  return res.success(200, req.post);
+});
 
-exports.create = async (req, res) => {
+exports.create = asyncHandler(async (req, res) => {
   const newPost = await postsService.create(req.body);
-  return response.success(res, 201, newPost);
-};
+  return res.success(201, newPost);
+});
 
-exports.update = async (req, res) => {
+exports.update = asyncHandler(async (req, res) => {
   const updatedPost = await postsService.update(req.params.id, req.body);
-  return response.success(res, 200, updatedPost);
-};
+  return res.success(200, updatedPost);
+});
 
-exports.delete = async (req, res) => {
-  const isDeleted = postsService.delete(req.params.id);
-  if (!isDeleted) throw404();
-  return response.success(res, 204);
-};
+exports.delete = asyncHandler(async (req, res) => {
+  await postsService.delete(req.params.id);
+  return res.success(204);
+});
