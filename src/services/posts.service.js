@@ -5,12 +5,14 @@ exports.getAll = async (page = 1, limit = 10) => {
   return posts;
 };
 
-exports.getByTopicId = async (topicId) => {
+exports.getByTopicId = async (topicId, page = 1, limit = 10) => {
   const posts = await Post.findAll({
     include: {
       model: Topic,
       where: { id: topicId },
     },
+    limit,
+    offset: (page - 1) * limit,
   });
   return posts;
 };

@@ -1,11 +1,7 @@
-const createModel = (configFn) => {
+const createModel = (configFn, associate) => {
   return (sequelize, DataTypes) => {
-    const {
-      modelName,
-      tableName,
-      options,
-      ...attributes
-    } = configFn(DataTypes);
+    const { modelName, tableName, options, ...attributes } =
+      configFn(DataTypes);
 
     const Model = sequelize.define(modelName, attributes ?? {}, {
       tableName: tableName,
@@ -13,6 +9,9 @@ const createModel = (configFn) => {
       underscored: true,
       ...options,
     });
+
+    if (associate) Model.associate = associate;
+
     return Model;
   };
 };
