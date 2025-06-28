@@ -7,7 +7,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     const comments = [...Array(1250)].map(() => ({
       post_id: faker.number.int({ min: 1, max: 250 }),
-      content: faker.lorem.paragraphs(),
+      content: faker.lorem.paragraph(),
     }));
     await queryInterface.bulkInsert("comments", comments, {});
   },

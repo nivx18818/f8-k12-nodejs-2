@@ -8,8 +8,8 @@ exports.getList = asyncHandler(async (req, res) => {
 });
 
 exports.getByTopicId = asyncHandler(async (req, res) => {
-  const posts = await postsService.getByTopicId();
-  return posts;
+  const posts = await postsService.getByTopicId(req.topic.id);
+  return res.success(200, posts);
 });
 
 exports.getById = asyncHandler(async (req, res) => {
