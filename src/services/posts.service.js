@@ -1,4 +1,5 @@
 const { Post, Topic, sequelize } = require("@/db/models");
+const { Op } = require("sequelize");
 
 exports.getAll = async (page = 1, limit = 10) => {
   const posts = await Post.findAll({ limit, offset: (page - 1) * limit });
@@ -50,6 +51,8 @@ exports.update = async (id, data) => {
 };
 
 exports.delete = async (id) => {
-  const deletedRows = await Post.destroy({ where: { id } });
+  const deletedRows = await Post.destroy({
+    where: { [Op.or]: [{ id }, { slug: id }] },
+  });
   return deletedRows > 0;
 };
