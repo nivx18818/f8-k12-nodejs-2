@@ -22,7 +22,7 @@ exports.create = asyncHandler(async (req, res) => {
 });
 
 exports.update = asyncHandler(async (req, res) => {
-  const updatedPost = await postsService.update(req.params.id, req.body);
+  const updatedPost = await postsService.update(req.post.id, req.body);
   return res.success(200, updatedPost);
 });
 

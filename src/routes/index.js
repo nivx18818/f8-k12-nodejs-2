@@ -16,8 +16,8 @@ fs.readdirSync(__dirname)
   )
   .forEach((file) => {
     const subRouter = require(path.join(__dirname, file));
-    const resource = file.split(".")[0]; // Ex: posts.route.js -> posts
-    const modelName = resource[0].toUpperCase() + resource.slice(1, -1); // Ex: posts -> Post
+    const resource = file.split(".")[0]; // E.g. posts.route.js -> posts
+    const modelName = resource[0].toUpperCase() + resource.slice(1, -1); // E.g. posts -> Post
     const model = models[modelName];
 
     subRouter.param("id", async (req, res, next, id) => {
