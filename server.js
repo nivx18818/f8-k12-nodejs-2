@@ -18,6 +18,12 @@ app.use(express.json());
 app.use(express.urlencoded());
 
 app.use(response);
+
+app.use(cors({ origin: "http://localhost:3000" }));
+app.use(express.json());
+app.use(express.urlencoded());
+
+app.use(response);
 app.use("/api/v1", sequelizeAuthenticate, mainRouter);
 app.use(handleErrors);
 
