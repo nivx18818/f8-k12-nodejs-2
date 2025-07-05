@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.41, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: f8_k12_nodejs_2
+-- Host: 127.0.0.1    Database: inkspace_db
 -- ------------------------------------------------------
 -- Server version	8.4.4
 
