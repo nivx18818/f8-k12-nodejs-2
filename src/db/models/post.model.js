@@ -1,14 +1,16 @@
+const { default: slugify } = require("slugify");
+
 module.exports = (sequelize, DataTypes) => {
   const Post = sequelize.define(
     "Post",
     {
       slug: {
-        type: DataTypes.STRING(45),
+        type: DataTypes.STRING(255),
         unique: true,
         allowNull: false,
       },
       title: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(255),
         allowNull: false,
       },
       description: {
@@ -40,6 +42,13 @@ module.exports = (sequelize, DataTypes) => {
           fields: ["status", "visibility"],
         },
       ],
+      hooks: {
+        beforeValidate: (post) => {
+          if (post.title && post.changed("title")) {
+            post.slug = slugify(post.title, { lower: true, strict: true });
+          }
+        },
+      },
     }
   );
 

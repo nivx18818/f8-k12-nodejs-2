@@ -3,12 +3,13 @@ module.exports = (sequelize, DataTypes) => {
     "Topic",
     {
       slug: {
-        type: DataTypes.STRING(45),
+        type: DataTypes.STRING(255),
         unique: true,
         allowNull: false,
       },
       name: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(100),
+        unique: true,
         allowNull: false,
       },
       description: DataTypes.TEXT,
@@ -21,6 +22,13 @@ module.exports = (sequelize, DataTypes) => {
           unique: true,
         },
       ],
+      hooks: {
+        beforeValidate: (topic) => {
+          if (topic.name && topic.changed("name")) {
+            topic.slug = slugify(topic.name, { lower: true, strict: true });
+          }
+        },
+      },
     }
   );
 

@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     "Skill",
     {
       name: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(100),
         unique: true,
         allowNull: false,
       },
