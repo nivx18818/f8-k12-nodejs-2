@@ -74,7 +74,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     });
     Post.belongsToMany(models.User, {
-      through: "likes",
+      through: "likes_post",
       foreignKey: {
         name: "post_id",
         allowNull: false,
