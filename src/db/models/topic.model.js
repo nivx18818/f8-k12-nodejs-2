@@ -1,3 +1,5 @@
+const { default: slugify } = require("slugify");
+
 module.exports = (sequelize, DataTypes) => {
   const Topic = sequelize.define(
     "Topic",

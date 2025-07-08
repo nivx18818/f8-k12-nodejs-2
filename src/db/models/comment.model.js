@@ -6,6 +6,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
+      status: {
+        type: DataTypes.ENUM("visible", "hidden", "pending", "deleted"),
+        defaultValue: "visible",
+      },
     },
     {
       tableName: "comments",
