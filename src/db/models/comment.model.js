@@ -1,21 +1,36 @@
-const createModel = require("@/utils/createModel");
-
-const Comment = createModel(
-  (DataTypes) => ({
-    modelName: "Comment",
-    tableName: "comments",
-    postId: {
-      type: DataTypes.INTEGER({ unsigned: true }),
-      allowNull: false,
+module.exports = (sequelize, DataTypes) => {
+  const Comment = sequelize.define(
+    "Comment",
+    {
+      content: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
     },
-    content: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-  }),
-  (models) => {
-    models.Comment.belongsTo(models.Post);
-  }
-);
+    {
+      tableName: "comments",
+    }
+  );
 
-module.exports = Comment;
+  Comment.associate = (models) => {
+    Comment.belongsTo(models.User, {
+      foreignKey: "user_id",
+    });
+    Comment.belongsTo(models.Post, {
+      foreignKey: {
+        name: "post_id",
+        allowNull: false,
+      },
+    });
+    Comment.hasMany(models.Comment, {
+      as: "Replies",
+      foreignKey: "parent_id",
+    });
+    Comment.belongsTo(models.Comment, {
+      as: "Parent",
+      foreignKey: "parent_id",
+    });
+  };
+
+  return Comment;
+};

@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.41, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: inkspace_db
+-- Host: 127.0.0.1    Database: inkspace_dev
 -- ------------------------------------------------------
 -- Server version	8.4.4
 

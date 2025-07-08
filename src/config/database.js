@@ -12,6 +12,10 @@ module.exports = {
     dialectOptions: {
       bigNumberStrings: true,
     },
+    define: {
+      timestamps: true,
+      underscored: true,
+    },
   },
   test: {
     username: process.env.CI_DB_USERNAME,
@@ -23,6 +27,10 @@ module.exports = {
     dialectOptions: {
       bigNumberStrings: true,
     },
+    define: {
+      timestamps: true,
+      underscored: true,
+    },
   },
   production: {
     username: process.env.PROD_DB_USERNAME,
@@ -33,6 +41,10 @@ module.exports = {
     dialect: "mysql",
     dialectOptions: {
       bigNumberStrings: true,
+    },
+    define: {
+      timestamps: true,
+      underscored: true,
     },
   },
 };
