@@ -5,33 +5,43 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("comments", {
       id: {
-        type: Sequelize.INTEGER({ unsigned: true }),
+        type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
+      user_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "users",
+          key: "id",
+        },
+      },
       post_id: {
-        type: Sequelize.INTEGER({ unsigned: true }),
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: "posts",
           key: "id",
         },
-        onDelete: "CASCADE",
+      },
+      parent_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: "comments",
+          key: "id",
+        },
       },
       content: {
         type: Sequelize.TEXT,
         allowNull: false,
       },
-      created_at: {
-        type: Sequelize.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+      status: {
+        type: Sequelize.ENUM("visible", "hidden", "pending", "deleted"),
+        defaultValue: "visible",
       },
-      updated_at: {
-        type: Sequelize.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
-      },
+      created_at: Sequelize.DATE,
+      updated_at: Sequelize.DATE,
     });
   },
 
