@@ -30,6 +30,10 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false,
       },
+      cover_image: {
+        type: Sequelize.STRING(255),
+        allowNull: false,
+      },
       content: {
         type: Sequelize.TEXT,
         allowNull: false,
@@ -42,6 +46,7 @@ module.exports = {
         type: Sequelize.ENUM("public", "followers", "private"),
         defaultValue: "public",
       },
+      deleted_at: Sequelize.DATE,
       created_at: Sequelize.DATE,
       updated_at: Sequelize.DATE,
     });

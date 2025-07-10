@@ -13,6 +13,7 @@ module.exports = {
         slug: slugify(title, { lower: true, strict: true }),
         title: title,
         description: `This is the description of post ${i}.`,
+        cover_image: `https://picsum.photos/seed/post${i}/800/400`,
         content: `This is the content of post ${i}. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.`,
         status: i % 3 === 0 ? "draft" : "published",
         visibility: "public",
