@@ -7,8 +7,8 @@ const cors = require("cors");
 const mainRouter = require("@/routes");
 
 const response = require("@/middlewares/response");
-const handleErrors = require("@/middlewares/handleErrors");
-const sequelizeAuthenticate = require("@/middlewares/sequelizeAuthenticate");
+const handleErrors = require("@/middlewares/handle-errors");
+const sequelizeAuthenticate = require("@/middlewares/sequelize-authenticate");
 
 const app = express();
 const port = 3001;
