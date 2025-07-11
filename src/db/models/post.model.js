@@ -27,10 +27,12 @@ module.exports = (sequelize, DataTypes) => {
       },
       status: {
         type: DataTypes.ENUM("published", "draft"),
+        allowNull: false,
         defaultValue: "draft",
       },
       visibility: {
         type: DataTypes.ENUM("public", "followers", "private"),
+        allowNull: false,
         defaultValue: "public",
       },
     },

@@ -38,6 +38,7 @@ module.exports = {
       },
       status: {
         type: Sequelize.ENUM("visible", "hidden", "pending", "deleted"),
+        allowNull: false,
         defaultValue: "visible",
       },
       created_at: Sequelize.DATE,

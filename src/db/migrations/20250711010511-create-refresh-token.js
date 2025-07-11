@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("posts", {
+    await queryInterface.createTable("refresh_tokens", {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -17,44 +17,33 @@ module.exports = {
           key: "id",
         },
       },
-      slug: {
+      token: {
         type: Sequelize.STRING(255),
         unique: true,
         allowNull: false,
       },
-      title: {
+      expires_at: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      ip_address: {
+        type: Sequelize.STRING(15),
+        allowNull: false,
+      },
+      user_agent: {
         type: Sequelize.STRING(255),
         allowNull: false,
       },
-      description: {
-        type: Sequelize.TEXT,
+      revoked: {
+        type: Sequelize.BOOLEAN,
         allowNull: false,
+        defaultValue: false,
       },
-      cover_image: {
-        type: Sequelize.STRING(255),
-        allowNull: false,
-      },
-      content: {
-        type: Sequelize.TEXT,
-        allowNull: false,
-      },
-      status: {
-        type: Sequelize.ENUM("published", "draft"),
-        allowNull: false,
-        defaultValue: "draft",
-      },
-      visibility: {
-        type: Sequelize.ENUM("public", "followers", "private"),
-        allowNull: false,
-        defaultValue: "public",
-      },
-      deleted_at: Sequelize.DATE,
       created_at: Sequelize.DATE,
-      updated_at: Sequelize.DATE,
     });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("posts");
+    await queryInterface.dropTable("refresh_tokens");
   },
 };

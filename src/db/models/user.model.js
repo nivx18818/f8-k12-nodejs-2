@@ -33,12 +33,27 @@ module.exports = (sequelize, DataTypes) => {
           unique: true,
         },
       ],
+      hooks: {
+        afterDestroy: async (user, options) => {
+          const { RefreshToken } = user.constructor.sequelize.models;
+          await RefreshToken.destroy({
+            where: { user_id: user.id },
+            transaction: options.transaction,
+          });
+        },
+      },
     }
   );
 
   User.associate = (models) => {
     User.hasOne(models.Profile, {
       onDelete: "CASCADE",
+      foreignKey: {
+        name: "user_id",
+        allowNull: false,
+      },
+    });
+    User.hasMany(models.RefreshToken, {
       foreignKey: {
         name: "user_id",
         allowNull: false,
