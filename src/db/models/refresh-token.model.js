@@ -28,6 +28,12 @@ module.exports = (sequelize, DataTypes) => {
     {
       tableName: "refresh_tokens",
       updatedAt: false,
+      indexes: [
+        {
+          fields: ["token"],
+          unique: true,
+        },
+      ],
     }
   );
 

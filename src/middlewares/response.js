@@ -10,17 +10,26 @@ const response = (req, res, next) => {
     });
   };
 
-  res.error = (status, message, err) => {
-    console.error(err.stack);
-
-    return res.status(status ?? 500).json({
-      success: false,
-      message,
+  res.token = (accessToken, refreshToken) => {
+    return res.success(200, {
+      tokenType: "Bearer",
+      accessToken,
+      refreshToken,
+      expiresIn: process.env.ACCESS_TOKEN_EXPIRATION,
     });
   };
 
-  res.error404 = (message = "Resource not found") => {
-    res.error(404, message);
+  res.error = (status, message, err) => {
+    if (err) console.error(err.stack);
+
+    return res.status(status ?? 500).json({
+      success: false,
+      message: message ?? err?.toString(),
+    });
+  };
+
+  res.error404 = (message = "Resource not found", err) => {
+    res.error(404, message, err);
   };
 
   next();
