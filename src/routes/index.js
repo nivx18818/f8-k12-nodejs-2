@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const express = require("express");
 const { Op } = require("sequelize");
-const models = require("@/db/models");
+const models = require("@/models");
 
 const mainRouter = express.Router();
 const basename = path.basename(__filename);
@@ -11,9 +11,9 @@ fs.readdirSync(__dirname)
   .filter((file) => file.indexOf(".") !== 0 && file !== basename && file.slice(-9) === ".route.js")
   .forEach((file) => {
     const { subRouter, include } = require(path.join(__dirname, file));
-    const resource = file.split(".")[0]; // E.g. posts.route.js -> posts
-    const modelName = resource[0].toUpperCase() + resource.slice(1, -1); // E.g. posts -> Post
-    const model = models[modelName];
+    const resource = file.split(".")[0]; // E.g. post.route.js -> post
+    const modelName = resource[0].toUpperCase() + resource.slice(1); // E.g. post -> Post
+    const model = models[modelName + "s"];
 
     subRouter.param("id", async (req, res, next, id) => {
       const whereConditions = [{ id }];
@@ -21,8 +21,10 @@ fs.readdirSync(__dirname)
       switch (true) {
         case model.rawAttributes.slug:
           whereConditions.push({ slug: id });
+          break;
         case model.rawAttributes.username:
           whereConditions.push({ username: id });
+          break;
       }
 
       const options = {
@@ -36,7 +38,7 @@ fs.readdirSync(__dirname)
       next();
     });
 
-    mainRouter.use(`/${resource}`, subRouter);
+    mainRouter.use(`/${resource}` + (resource !== "auth" ? "s" : ""), subRouter);
   });
 
 module.exports = mainRouter;
