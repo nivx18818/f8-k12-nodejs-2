@@ -1,4 +1,4 @@
-const { RefreshToken } = require("@/db/models");
+const { RefreshToken } = require("@/models");
 
 exports.getAll = async () => {
   const refreshTokens = await RefreshToken.findAll();

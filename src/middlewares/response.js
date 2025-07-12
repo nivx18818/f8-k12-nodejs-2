@@ -15,12 +15,13 @@ const response = (req, res, next) => {
       tokenType: "Bearer",
       accessToken,
       refreshToken,
-      expiresIn: process.env.ACCESS_TOKEN_EXPIRATION,
+      accessTokenExpiresIn: process.env.ACCESS_TOKEN_EXPIRATION,
+      refreshTokenExpiresIn: process.env.REFRESH_TOKEN_EXPIRATION,
     });
   };
 
   res.error = (status, message, err) => {
-    if (err) console.error(err.stack);
+    if (err) console.error(err);
 
     return res.status(status ?? 500).json({
       success: false,

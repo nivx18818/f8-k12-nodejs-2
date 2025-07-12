@@ -15,18 +15,17 @@ const generateRefreshToken = async (req, userId, length = 32) => {
     randomToken = generateToken(length);
   }
 
-  const exp = new Date();
-  exp.setMonth(exp.getMonth() + 1);
+  const exp = new Date(Date.now() + parseInt(process.env.REFRESH_TOKEN_EXPIRATION) * 1000);
 
   const refreshToken = await refreshTokenService.create({
     userId: userId,
     token: randomToken,
     expiresAt: exp,
-    ipAddress: req.headers["x-forwarded-for"]?.split(",")[0]?.trim() ?? req.ip,
+    ipAddress: req.ip,
     userAgent: req.headers["user-agent"],
   });
 
-  return refreshToken;
+  return refreshToken.token;
 };
 
 module.exports = generateRefreshToken;
