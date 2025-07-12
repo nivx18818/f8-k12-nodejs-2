@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
   RefreshToken.associate = (models) => {
     RefreshToken.belongsTo(models.User, {
       foreignKey: {
-        name: "user_id",
+        name: "userId",
         allowNull: false,
       },
     });

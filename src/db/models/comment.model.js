@@ -19,28 +19,28 @@ module.exports = (sequelize, DataTypes) => {
 
   Comment.associate = (models) => {
     Comment.belongsTo(models.User, {
-      foreignKey: "user_id",
+      foreignKey: "userId",
     });
     Comment.belongsTo(models.Post, {
       foreignKey: {
-        name: "post_id",
+        name: "postId",
         allowNull: false,
       },
     });
     Comment.belongsToMany(models.User, {
       through: "likes_comment",
       foreignKey: {
-        name: "comment_id",
+        name: "commentId",
         allowNull: false,
       },
     });
     Comment.hasMany(models.Comment, {
       as: "Replies",
-      foreignKey: "parent_id",
+      foreignKey: "parentId",
     });
     Comment.belongsTo(models.Comment, {
       as: "Parent",
-      foreignKey: "parent_id",
+      foreignKey: "parentId",
     });
   };
 

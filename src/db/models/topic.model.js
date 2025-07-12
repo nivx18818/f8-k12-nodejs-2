@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     Topic.belongsToMany(models.Post, {
       through: "topic_post",
       foreignKey: {
-        name: "topic_id",
+        name: "topicId",
         allowNull: false,
       },
     });

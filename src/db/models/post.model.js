@@ -61,28 +61,28 @@ module.exports = (sequelize, DataTypes) => {
   Post.associate = (models) => {
     Post.belongsTo(models.User, {
       foreignKey: {
-        name: "user_id",
+        name: "userId",
         allowNull: false,
       },
     });
     Post.hasMany(models.Comment, {
       onDelete: "CASCADE",
       foreignKey: {
-        name: "post_id",
+        name: "postId",
         allowNull: false,
       },
     });
     Post.belongsToMany(models.Topic, {
       through: "topic_post",
       foreignKey: {
-        name: "post_id",
+        name: "postId",
         allowNull: false,
       },
     });
     Post.belongsToMany(models.User, {
       through: "likes_post",
       foreignKey: {
-        name: "post_id",
+        name: "postId",
         allowNull: false,
       },
     });

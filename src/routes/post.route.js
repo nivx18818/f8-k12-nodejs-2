@@ -20,7 +20,7 @@ module.exports = {
   include: {
     model: Comment,
     as: "Comments",
-    where: { parent_id: null },
+    where: { parentId: null },
     include: "Replies",
   },
 };

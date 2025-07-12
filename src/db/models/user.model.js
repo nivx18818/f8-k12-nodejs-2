@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
         afterDestroy: async (user, options) => {
           const { RefreshToken } = user.constructor.sequelize.models;
           await RefreshToken.destroy({
-            where: { user_id: user.id },
+            where: { userId: user.id },
             transaction: options.transaction,
           });
         },
@@ -49,44 +49,44 @@ module.exports = (sequelize, DataTypes) => {
     User.hasOne(models.Profile, {
       onDelete: "CASCADE",
       foreignKey: {
-        name: "user_id",
+        name: "userId",
         allowNull: false,
       },
     });
     User.hasMany(models.RefreshToken, {
       foreignKey: {
-        name: "user_id",
+        name: "userId",
         allowNull: false,
       },
     });
     User.hasMany(models.Post, {
       onDelete: "CASCADE",
       foreignKey: {
-        name: "user_id",
+        name: "userId",
         allowNull: false,
       },
     });
     User.hasMany(models.Comment, {
-      foreignKey: "user_id",
+      foreignKey: "userId",
     });
     User.belongsToMany(models.Post, {
       through: "likes_post",
       foreignKey: {
-        name: "user_id",
+        name: "userId",
         allowNull: false,
       },
     });
     User.belongsToMany(models.Comment, {
       through: "likes_comment",
       foreignKey: {
-        name: "user_id",
+        name: "userId",
         allowNull: false,
       },
     });
     User.belongsToMany(models.Skill, {
       through: "user_skill",
       foreignKey: {
-        name: "user_id",
+        name: "userId",
         allowNull: false,
       },
     });
@@ -94,11 +94,11 @@ module.exports = (sequelize, DataTypes) => {
       as: "following",
       through: "user_follower",
       foreignKey: {
-        name: "follower_id",
+        name: "followerId",
         allowNull: false,
       },
       otherKey: {
-        name: "followed_id",
+        name: "followedId",
         allowNull: false,
       },
     });
@@ -106,11 +106,11 @@ module.exports = (sequelize, DataTypes) => {
       as: "followers",
       through: "user_follower",
       foreignKey: {
-        name: "followed_id",
+        name: "followedId",
         allowNull: false,
       },
       otherKey: {
-        name: "follower_id",
+        name: "followerId",
         allowNull: false,
       },
     });
