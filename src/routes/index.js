@@ -38,7 +38,7 @@ fs.readdirSync(__dirname)
       next();
     });
 
-    const pathname = resource !== "auth" ? `/${resource}s` : "/";
+    const pathname = resource !== "auth" ? `/${resource}s` : "/auth";
     mainRouter.use(pathname, subRouter);
   });
 
