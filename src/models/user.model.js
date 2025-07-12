@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(255),
         allowNull: false,
       },
+      verified_at: DataTypes.DATE,
     },
     {
       tableName: "users",

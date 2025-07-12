@@ -3,7 +3,7 @@ const router = express.Router();
 
 const postController = require("@/controllers/post.controller");
 const commentController = require("@/controllers/comment.controller");
-const { Comment } = require("@/db/models");
+const { Comment } = require("@/models");
 
 router.get("/", postController.getList);
 router.post("/", postController.create);

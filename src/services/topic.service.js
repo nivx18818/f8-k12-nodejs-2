@@ -1,4 +1,4 @@
-const { Topic } = require("@/db/models");
+const { Topic } = require("@/models");
 
 exports.getAll = async () => {
   const topics = await Topic.findAll();

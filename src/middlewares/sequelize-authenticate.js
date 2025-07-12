@@ -1,4 +1,4 @@
-const { sequelize } = require("@/db/models");
+const { sequelize } = require("@/models");
 
 const sequelizeAuthenticate = async (req, res, next) => {
   try {

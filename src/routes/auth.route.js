@@ -5,8 +5,8 @@ const authController = require("@/controllers/auth.controller");
 const authGuard = require("@/middlewares/auth-guard");
 
 router.get("/me", authGuard, authController.me);
-router.get("/login", authController.login);
-router.get("/register", authController.register);
-router.get("/refresh-token", authController.refreshToken);
+router.post("/login", authController.login);
+router.post("/register", authController.register);
+router.post("/refresh-token", authController.refresh);
 
 module.exports = { subRouter: router };

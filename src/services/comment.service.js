@@ -1,4 +1,4 @@
-const { Comment } = require("@/db/models");
+const { Comment } = require("@/models");
 
 exports.getAll = async (page = 1, limit = 10) => {
   const comments = await Comment.findAll({ limit, offset: (page - 1) * limit });

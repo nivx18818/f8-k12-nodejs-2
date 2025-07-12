@@ -1,4 +1,4 @@
-const { User } = require("@/db/models");
+const { User } = require("@/models");
 const { Op } = require("sequelize");
 
 exports.getAll = async () => {

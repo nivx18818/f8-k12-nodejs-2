@@ -1,4 +1,4 @@
-const { Post, Topic, sequelize } = require("@/db/models");
+const { Post, Topic, sequelize } = require("@/models");
 const { Op } = require("sequelize");
 
 exports.getAll = async (page = 1, limit = 10) => {
