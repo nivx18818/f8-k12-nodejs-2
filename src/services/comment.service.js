@@ -5,11 +5,6 @@ exports.getAll = async (page = 1, limit = 10) => {
   return comments;
 };
 
-exports.getByPostId = async (postId) => {
-  const comment = await Comment.findAll({ where: { postId } });
-  return comment;
-};
-
 exports.getById = async (id) => {
   const comment = await Comment.findOne({ where: { id } });
   return comment;

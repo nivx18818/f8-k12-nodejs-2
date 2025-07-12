@@ -7,7 +7,7 @@ const cors = require("cors");
 const mainRouter = require("@/routes");
 
 const response = require("@/middlewares/response");
-const handleErrors = require("@/middlewares/handle-errors");
+const handleError = require("@/middlewares/handle-error");
 const sequelizeAuthenticate = require("@/middlewares/sequelize-authenticate");
 
 const app = express();
@@ -19,7 +19,7 @@ app.use(express.urlencoded());
 
 app.use(response);
 app.use("/api/v1", sequelizeAuthenticate, mainRouter);
-app.use(handleErrors);
+app.use(handleError);
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
