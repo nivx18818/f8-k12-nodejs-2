@@ -27,6 +27,7 @@ module.exports = {
         type: Sequelize.STRING(255),
         allowNull: false,
       },
+      verified_at: Sequelize.DATE,
       created_at: Sequelize.DATE,
       updated_at: Sequelize.DATE,
     });

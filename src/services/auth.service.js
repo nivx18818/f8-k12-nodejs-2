@@ -1,6 +1,7 @@
 const jwtService = require("@/services/jwt.service");
 const refreshTokenService = require("@/services/refresh-token.service");
 const userService = require("@/services/user.service");
+const queueService = require("@/services/queue.service");
 const generateRefreshToken = require("@/utils/generate-refresh-token");
 const bcrypt = require("@/utils/bcrypt");
 
@@ -24,10 +25,12 @@ exports.register = async (data) => {
     password: await bcrypt.hash(data.password),
   });
 
+  queueService.dispatch("sendVerificationEmail", { userId: user.id });
+
   return user;
 };
 
-exports.refresh = async (token) => {
+exports.refreshToken = async (token) => {
   const refreshToken = await refreshTokenService.getByToken(token);
 
   if (!refreshToken || refreshToken.revoked) {
@@ -40,3 +43,7 @@ exports.refresh = async (token) => {
 
   return [newAccessToken, newRefreshToken];
 };
+
+exports.forgotPassword = async () => {};
+
+exports.verifyEmail = async () => {};

@@ -38,7 +38,8 @@ fs.readdirSync(__dirname)
       next();
     });
 
-    mainRouter.use(`/${resource}` + (resource !== "auth" ? "s" : ""), subRouter);
+    const pathname = resource !== "auth" ? `/${resource}s` : "/";
+    mainRouter.use(pathname, subRouter);
   });
 
 module.exports = mainRouter;

@@ -13,7 +13,11 @@ exports.register = asyncHandler(async (req, res) => {
   return res.success(204);
 });
 
-exports.refresh = asyncHandler(async (req, res) => {
-  const newTokens = await authService.refresh(req.body.refreshToken);
+exports.refreshToken = asyncHandler(async (req, res) => {
+  const newTokens = await authService.refreshToken(req.body.refreshToken);
   res.success(200, ...newTokens);
 });
+
+exports.forgotPassword = async () => {};
+
+exports.verifyEmail = async () => {};
