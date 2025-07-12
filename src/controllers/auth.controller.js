@@ -4,8 +4,12 @@ const asyncHandler = require("@/utils/async-handler");
 exports.me = asyncHandler(async (req, res) => res.success(200, req.user));
 
 exports.login = asyncHandler(async (req, res) => {
-  const tokens = await authService.login(req.body.email, req.body.password);
-  res.success(200, ...tokens);
+  const tokens = await authService.login({
+    ...req.body,
+    ipAddress: req.ip,
+    userAgent: req.headers["user-agent"],
+  });
+  res.token(200, ...tokens);
 });
 
 exports.register = asyncHandler(async (req, res) => {
@@ -15,7 +19,7 @@ exports.register = asyncHandler(async (req, res) => {
 
 exports.refreshToken = asyncHandler(async (req, res) => {
   const newTokens = await authService.refreshToken(req.body.refreshToken);
-  res.success(200, ...newTokens);
+  res.token(200, ...newTokens);
 });
 
 exports.forgotPassword = async () => {};

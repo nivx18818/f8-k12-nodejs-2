@@ -8,7 +8,7 @@ const generateToken = (length = 32) => {
   return randomKey + dateString;
 };
 
-const generateRefreshToken = async (req, userId, length = 32) => {
+const generateRefreshToken = async (data, length = 32) => {
   let randomToken = generateToken(length);
 
   while (await refreshTokenService.getByToken(randomToken)) {
@@ -18,11 +18,9 @@ const generateRefreshToken = async (req, userId, length = 32) => {
   const exp = new Date(Date.now() + parseInt(process.env.REFRESH_TOKEN_EXPIRATION) * 1000);
 
   const refreshToken = await refreshTokenService.create({
-    userId: userId,
     token: randomToken,
     expiresAt: exp,
-    ipAddress: req.ip,
-    userAgent: req.headers["user-agent"],
+    ...data
   });
 
   return refreshToken.token;

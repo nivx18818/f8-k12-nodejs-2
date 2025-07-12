@@ -5,7 +5,7 @@ const queueService = require("@/services/queue.service");
 const handlers = require("@/jobs");
 
 const processJob = async (job) => {
-  const handler = handlers[job.type];
+  const handler = handlers[job.name];
   if (handler) {
     try {
       await queueService.update(job.id, { status: "processing" });

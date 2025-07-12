@@ -36,9 +36,9 @@ exports.delete = async (id) => {
   return deletedRows > 0;
 };
 
-exports.dispatch = async (type, payload) => {
+exports.dispatch = async (name, payload) => {
   await this.create({
-    type,
+    name: name,
     payload: JSON.stringify(payload),
   });
 };

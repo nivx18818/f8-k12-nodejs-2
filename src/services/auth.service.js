@@ -5,7 +5,7 @@ const queueService = require("@/services/queue.service");
 const generateRefreshToken = require("@/utils/generate-refresh-token");
 const bcrypt = require("@/utils/bcrypt");
 
-exports.login = async (email, password) => {
+exports.login = async ({ email, password, ...rest }) => {
   const user = await userService.getByUsernameOrEmail(email);
   const isValid = await bcrypt.compare(password, user?.password);
 
@@ -14,7 +14,7 @@ exports.login = async (email, password) => {
   }
 
   const accessToken = jwtService.sign(user.id);
-  const refreshToken = await generateRefreshToken(req, user.id);
+  const refreshToken = await generateRefreshToken({ userId: user.id, ...rest });
 
   return [accessToken, refreshToken];
 };
