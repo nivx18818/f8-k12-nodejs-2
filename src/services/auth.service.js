@@ -2,8 +2,8 @@ const jwtService = require("@/services/jwt.service");
 const refreshTokenService = require("@/services/refresh-token.service");
 const userService = require("@/services/user.service");
 const queueService = require("@/services/queue.service");
-const generateRefreshToken = require("@/utils/generate-refresh-token");
-const bcrypt = require("@/utils/bcrypt");
+const generateRefreshToken = require("@/utils/generate-refresh-token.util");
+const bcrypt = require("@/utils/bcrypt.util");
 
 exports.login = async ({ email, password, ...rest }) => {
   const user = await userService.getByUsernameOrEmail(email);

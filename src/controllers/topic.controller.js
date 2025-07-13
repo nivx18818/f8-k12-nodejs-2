@@ -1,5 +1,5 @@
 const topicService = require("@/services/topic.service");
-const asyncHandler = require("@/utils/async-handler");
+const asyncHandler = require("@/utils/async-handler.util");
 
 exports.getAll = asyncHandler(async (req, res) => {
   const topics = await topicService.getAll();

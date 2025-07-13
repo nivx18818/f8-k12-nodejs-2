@@ -1,5 +1,5 @@
 const commentService = require("@/services/comment.service");
-const asyncHandler = require("@/utils/async-handler");
+const asyncHandler = require("@/utils/async-handler.util");
 
 exports.getList = asyncHandler(async (req, res) => {
   const { page, limit } = req.query;

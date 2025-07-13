@@ -1,5 +1,5 @@
 const authService = require("@/services/auth.service");
-const asyncHandler = require("@/utils/async-handler");
+const asyncHandler = require("@/utils/async-handler.util");
 
 exports.me = asyncHandler(async (req, res) => res.success(200, req.user));
 

@@ -1,5 +1,5 @@
 const transporter = require("@/config/mailer");
-const emailService = require("@/emails/emailService");
+const emailService = require("@/emails/email-service");
 const userService = require("@/services/user.service");
 
 const sendPasswordChangedNotification = async (job) => {
