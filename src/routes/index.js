@@ -35,6 +35,7 @@ fs.readdirSync(__dirname)
       const value = await model.findOne(options);
       if (!value) return res.error404(`${modelName} not found`);
       req[modelName.toLowerCase()] = value;
+
       next();
     });
 

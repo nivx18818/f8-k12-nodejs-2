@@ -1,4 +1,4 @@
-const { default: slugify } = require("slugify");
+const generateSlug = require("@/utils/generate-slug.util");
 
 module.exports = (sequelize, DataTypes) => {
   const Topic = sequelize.define(
@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes) => {
       slug: {
         type: DataTypes.STRING(255),
         unique: true,
-        allowNull: false,
       },
       name: {
         type: DataTypes.STRING(100),
@@ -25,9 +24,9 @@ module.exports = (sequelize, DataTypes) => {
         },
       ],
       hooks: {
-        beforeValidate: (topic) => {
+        beforeCreate: (topic) => {
           if (topic.name && topic.changed("name")) {
-            topic.slug = slugify(topic.name, { lower: true, strict: true });
+            topic.slug = generateSlug(topic.id, topic.name);
           }
         },
       },
