@@ -1,6 +1,6 @@
 const createValidator = require("@/utils/create-validator.util");
 
-const baseSchema = {
+const postSchema = {
   title: {
     isLength: {
       options: { min: 1, max: 255 },
@@ -25,9 +25,9 @@ const baseSchema = {
 };
 
 module.exports = {
-  create: createValidator(baseSchema, {
+  create: createValidator(postSchema, {
     required: "all",
     optional: ["status", "visibility"],
   }),
-  update: createValidator(baseSchema),
+  update: createValidator(postSchema),
 };

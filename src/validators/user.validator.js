@@ -1,6 +1,6 @@
 const createValidator = require("@/utils/create-validator.util");
 
-const baseSchema = {
+const userSchema = {
   name: {
     isLength: {
       options: { max: 100 },
@@ -29,6 +29,6 @@ const baseSchema = {
 };
 
 module.exports = {
-  create: createValidator(baseSchema, { required: "all" }),
-  update: createValidator(baseSchema, { excludes: ["password"] }),
+  create: createValidator(userSchema, { required: "all" }),
+  update: createValidator(userSchema, { excludes: ["password"] }),
 };

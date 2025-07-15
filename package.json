@@ -25,7 +25,7 @@
   },
   "scripts": {
     "dev": "nodemon server.js",
-    "queue": "node --watch ./src/workers/queue-processor.js",
+    "queue": "node --watch ./src/workers/queue-processor.worker.js",
     "schedule": "node --watch ./src/utils/scheduler.js",
     "start": "NODE_ENV=production && node server.js",
     "db:migrate": "sequelize-cli db:migrate",
