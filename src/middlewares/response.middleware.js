@@ -29,10 +29,6 @@ const response = (req, res, next) => {
     });
   };
 
-  res.error404 = (message = "Resource not found", err) => {
-    res.error(404, message, err);
-  };
-
   next();
 };
 
