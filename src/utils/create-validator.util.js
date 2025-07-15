@@ -16,6 +16,8 @@ const createValidator = (
   const schema = schemaFields
     .filter((field) => !excludes.includes(field))
     .reduce((schema, field) => {
+      schema[field] = baseSchema[field];
+
       const isRequired =
         (required === "all" || required.includes(field)) && !optional.includes(field);
 
