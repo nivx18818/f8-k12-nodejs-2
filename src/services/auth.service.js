@@ -9,9 +9,7 @@ exports.login = async ({ email, password, ...rest }) => {
   const user = await userService.getByUsernameOrEmail(email);
   const isValid = await bcrypt.compare(password, user?.password);
 
-  if (!isValid) {
-    return res.error(401, "Invalid email or password");
-  }
+  if (!isValid) return null;
 
   const accessToken = jwtService.sign(user.id);
   const refreshToken = await generateRefreshToken({ userId: user.id, ...rest });
@@ -30,20 +28,41 @@ exports.register = async (data) => {
   return user;
 };
 
-exports.refreshToken = async (token) => {
+exports.refreshToken = async (token, data) => {
   const refreshToken = await refreshTokenService.getByToken(token);
 
   if (!refreshToken || refreshToken.revoked) {
-    return res.error(401, "Invalid or expired refresh token");
+    return null;
   }
 
   const newAccessToken = jwtService.sign({ userId: refreshToken.userId });
   await refreshTokenService.revoke(refreshToken.token);
-  const newRefreshToken = await generateRefreshToken(req, refreshToken.userId);
+  const newRefreshToken = await generateRefreshToken({
+    userId: refreshToken.userId,
+    ...data,
+  });
 
   return [newAccessToken, newRefreshToken];
 };
 
-exports.forgotPassword = async () => {};
+exports.forgotPassword = async (email) => {
+  const user = await userService.getByEmail(email);
+  if (!user) return;
+  queueService.dispatch("sendPasswordResetEmail", { userId: user.id });
+};
 
-exports.verifyEmail = async () => {};
+exports.resetPassword = async (token, newPassword) => {
+  const { userId } = jwtService.verify(token);
+  const updatedUser = await userService.update(userId, { password: newPassword });
+  if (!updatedUser) return false;
+  queueService.dispatch("sendPasswordChangedNotification", { userId });
+  return true;
+};
+
+exports.verifyEmail = async (token) => {
+  const { userId } = jwtService.verify(token);
+  const updatedUser = await userService.update(userId, { verifiedAt: new Date() });
+  if (!updatedUser) return false;
+  queueService.dispatch("sendVerificationEmail", { userId });
+  return true;
+};
