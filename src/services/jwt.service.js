@@ -1,7 +1,7 @@
-const jwtService = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 
 exports.sign = (userId, options) => {
-  const token = jwtService.sign({ userId }, process.env.JWT_SECRET, {
+  const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
     expiresIn: process.env.ACCESS_TOKEN_EXPIRATION,
     ...options,
   });
@@ -9,6 +9,6 @@ exports.sign = (userId, options) => {
 };
 
 exports.verify = (token) => {
-  const decodedData = jwtService.verify(token, process.env.JWT_SECRET);
+  const decodedData = jwt.verify(token, process.env.JWT_SECRET);
   return decodedData;
 };

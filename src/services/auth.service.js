@@ -36,13 +36,26 @@ exports.refreshToken = async (token, data) => {
   }
 
   const newAccessToken = jwtService.sign({ userId: refreshToken.userId });
-  await refreshTokenService.revoke(refreshToken.token);
+
+  const isSuccessful = await refreshTokenService.revoke(refreshToken.token);
+  if (!isSuccessful) return false;
+
   const newRefreshToken = await generateRefreshToken({
     userId: refreshToken.userId,
     ...data,
   });
 
   return [newAccessToken, newRefreshToken];
+};
+
+exports.logout = async (token) => {
+  const refreshToken = await refreshTokenService.getByToken(token);
+  if (!refreshToken) return false;
+
+  const isSuccessful = await refreshTokenService.revoke(token);
+  if (!isSuccessful) return false;
+
+  return true;
 };
 
 exports.forgotPassword = async (email) => {

@@ -14,7 +14,7 @@ exports.login = asyncHandler(async (req, res) => {
     return res.error(401, "Invalid email or password");
   }
 
-  return res.token(200, ...tokens);
+  return res.token(...tokens);
 });
 
 exports.register = asyncHandler(async (req, res) => {
@@ -23,7 +23,7 @@ exports.register = asyncHandler(async (req, res) => {
 });
 
 exports.refreshToken = asyncHandler(async (req, res) => {
-  const newTokens = await authService.refreshToken(req.body.refreshToken, {
+  const newTokens = await authService.refreshToken(req.cookies.refreshToken, {
     ipAddress: req.ip,
     userAgent: req.headers["user-agent"],
   });
@@ -32,7 +32,18 @@ exports.refreshToken = asyncHandler(async (req, res) => {
     return res.error(401, "Invalid or expired refresh token");
   }
 
-  return res.token(200, ...newTokens);
+  return res.token(...newTokens);
+});
+
+exports.logout = asyncHandler(async (req, res) => {
+  const token = req.cookies.refreshToken;
+  const isSuccessful = await authService.logout(token);
+
+  if (!isSuccessful) {
+    return res.error(400, "Failed to log out");
+  }
+
+  return res.clearCookies();
 });
 
 exports.forgotPassword = asyncHandler(async (req, res) => {

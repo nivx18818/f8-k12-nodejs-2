@@ -4,6 +4,7 @@
   "main": "server.js",
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "ejs": "^3.1.10",
@@ -24,10 +25,10 @@
     "@": "./src"
   },
   "scripts": {
-    "dev": "nodemon server.js",
+    "dev": "node --watch server.js",
     "queue": "node --watch ./src/workers/queue-processor.worker.js",
     "schedule": "node --watch ./src/utils/scheduler.js",
-    "start": "NODE_ENV=production && node server.js",
+    "start": "node server.js",
     "db:migrate": "sequelize-cli db:migrate",
     "db:migrate:undo:all": "sequelize-cli db:migrate:undo:all",
     "db:seed": "sequelize-cli db:seed",

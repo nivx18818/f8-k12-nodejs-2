@@ -15,7 +15,7 @@ const generateRefreshToken = async (data, length = 32) => {
     randomToken = generateToken(length);
   }
 
-  const exp = new Date(Date.now() + parseInt(process.env.REFRESH_TOKEN_EXPIRATION) * 1000);
+  const exp = new Date(Date.now() + parseInt(process.env.REFRESH_TOKEN_EXPIRATION, 10));
 
   const refreshToken = await refreshTokenService.create({
     token: randomToken,

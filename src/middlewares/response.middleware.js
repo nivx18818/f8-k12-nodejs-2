@@ -1,4 +1,11 @@
 const response = (req, res, next) => {
+  const cookieOptions = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "Strict",
+    path: "/",
+  };
+
   res.success = (status, data) => {
     if (status === 204) {
       return res.status(status).send();
@@ -11,17 +18,25 @@ const response = (req, res, next) => {
   };
 
   res.token = (accessToken, refreshToken) => {
-    return res.success(200, {
-      tokenType: "Bearer",
-      accessToken,
-      refreshToken,
-      accessTokenExpiresIn: process.env.ACCESS_TOKEN_EXPIRATION,
-      refreshTokenExpiresIn: process.env.REFRESH_TOKEN_EXPIRATION,
+    res.cookie("accessToken", accessToken, {
+      ...cookieOptions,
+      maxAge: parseInt(process.env.ACCESS_TOKEN_EXPIRATION, 10) || 3600000,
     });
+    res.cookie("refreshToken", refreshToken, {
+      ...cookieOptions,
+      maxAge: parseInt(process.env.REFRESH_TOKEN_EXPIRATION, 10) || 3369600000,
+    });
+    return res.success(204);
+  };
+
+  res.clearCookies = () => {
+    res.clearCookie("accessToken", cookieOptions);
+    res.clearCookie("refreshToken", cookieOptions);
+    return res.success(204);
   };
 
   res.error = (status, message, err) => {
-    if (err) console.error(err);
+    if (err && process.env.NODE_ENV === "development") console.error(err);
 
     return res.status(status ?? 500).json({
       success: false,
