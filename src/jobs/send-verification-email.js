@@ -8,7 +8,7 @@ const sendVerificationEmail = async (job) => {
   const user = await userService.getById(userId);
 
   const token = jwtService.sign(userId);
-  const verificationUrl = `${process.env.APP_URL}/verify-email?token=${token}`;
+  const verificationUrl = `${process.env.APP_ORIGIN}/verify-email?token=${token}`;
 
   const emailTemplate = await emailService.loadEmail("verification", {
     user,

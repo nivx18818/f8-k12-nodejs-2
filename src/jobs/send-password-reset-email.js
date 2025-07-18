@@ -8,7 +8,7 @@ const sendPasswordResetEmail = async (job) => {
   const user = await userService.getById(userId);
 
   const token = jwtService.sign(userId);
-  const resetUrl = `${process.env.APP_URL}/reset-password?token=${token}`;
+  const resetUrl = `${process.env.APP_ORIGIN}/reset-password?token=${token}`;
 
   const emailTemplate = await emailService.loadEmail("reset-password", {
     user,

@@ -6,7 +6,7 @@ const sendPasswordChangedNotification = async (job) => {
   const { userId } = job.payload;
   const user = await userService.getById(userId);
 
-  const loginUrl = `${process.env.APP_URL}/login`;
+  const loginUrl = `${process.env.APP_ORIGIN}/login`;
 
   const emailTemplate = await emailService.loadEmail("password-changed", {
     user,
