@@ -38,7 +38,7 @@ exports.refreshToken = async (token, data) => {
   const newAccessToken = jwtService.sign({ userId: refreshToken.userId });
 
   const isSuccessful = await refreshTokenService.revoke(refreshToken.token);
-  if (!isSuccessful) return false;
+  if (!isSuccessful) return null;
 
   const newRefreshToken = await generateRefreshToken({
     userId: refreshToken.userId,

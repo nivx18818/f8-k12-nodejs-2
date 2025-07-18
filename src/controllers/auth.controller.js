@@ -23,6 +23,8 @@ exports.register = asyncHandler(async (req, res) => {
 });
 
 exports.refreshToken = asyncHandler(async (req, res) => {
+  console.log(req.cookies.refreshToken);
+
   const newTokens = await authService.refreshToken(req.cookies.refreshToken, {
     ipAddress: req.ip,
     userAgent: req.headers["user-agent"],

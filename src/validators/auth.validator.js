@@ -36,12 +36,6 @@ const registerSchema = {
   },
 };
 
-const refreshTokenSchema = {
-  refreshToken: {
-    isJWT: "Refresh token must be a valid JWT token",
-  },
-};
-
 const forgotPasswordSchema = {
   email: {
     isEmail: "Email must be a valid email address",
@@ -75,7 +69,6 @@ const changePasswordSchema = {
 module.exports = {
   login: createValidator(loginSchema, { required: "all" }),
   register: createValidator(registerSchema, { required: "all" }),
-  refreshToken: createValidator(refreshTokenSchema, { required: "all" }),
   forgotPassword: createValidator(forgotPasswordSchema, { required: "all" }),
   resetPassword: createValidator(resetPasswordSchema, { required: "all" }),
   verifyEmail: createValidator(verifyEmailSchema, { required: "all" }),
