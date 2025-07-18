@@ -7,17 +7,26 @@ exports.getAll = async () => {
 };
 
 exports.getById = async (id) => {
-  const user = await User.findOne({ where: { id } });
+  const user = await User.findOne({
+    where: { id },
+    attributes: { exclude: ["password"] },
+  });
   return user;
 };
 
 exports.getByUsername = async (username) => {
-  const user = await User.findOne({ where: { username } });
+  const user = await User.findOne({
+    where: { username },
+    attributes: { exclude: ["password"] },
+  });
   return user;
 };
 
 exports.getByEmail = async (email) => {
-  const user = await User.findOne({ where: { email } });
+  const user = await User.findOne({
+    where: { email },
+    attributes: { exclude: ["password"] },
+  });
   return user;
 };
 
@@ -26,6 +35,7 @@ exports.getByUsernameOrEmail = async (value) => {
     where: {
       [Op.or]: [{ email: value }, { username: value }],
     },
+    attributes: { exclude: ["password"] },
   });
   return user;
 };
