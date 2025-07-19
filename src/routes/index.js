@@ -16,14 +16,14 @@ fs.readdirSync(__dirname)
     const model = models[modelName];
 
     subRouter.param("id", async (req, res, next, id) => {
-      const whereConditions = [{ id }];
+      let whereConditions = [{ id }];
 
       switch (true) {
-        case model.rawAttributes.slug:
-          whereConditions.push({ slug: id });
+        case !!model.rawAttributes.slug:
+          whereConditions = [{ slug: id }];
           break;
-        case model.rawAttributes.username:
-          whereConditions.push({ username: id });
+        case !!model.rawAttributes.username:
+          whereConditions = [{ username: id }];
           break;
       }
 
