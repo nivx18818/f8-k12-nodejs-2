@@ -13,7 +13,7 @@ fs.readdirSync(__dirname)
     const { subRouter, include } = require(path.join(__dirname, file));
     const resource = file.split(".")[0]; // E.g. post.route.js -> post
     const modelName = resource[0].toUpperCase() + resource.slice(1); // E.g. post -> Post
-    const model = models[modelName + "s"];
+    const model = models[modelName];
 
     subRouter.param("id", async (req, res, next, id) => {
       const whereConditions = [{ id }];
