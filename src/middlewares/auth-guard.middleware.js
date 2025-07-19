@@ -1,6 +1,5 @@
 const jwtService = require("@/services/jwt.service");
 const userService = require("@/services/user.service");
-const { User } = require("@/models");
 
 const authGuard = async (req, res, next) => {
   const token = req.cookies.accessToken;

@@ -23,7 +23,9 @@ exports.register = asyncHandler(async (req, res) => {
 });
 
 exports.refreshToken = asyncHandler(async (req, res) => {
-  console.log(req.cookies.refreshToken);
+  if (!req.cookies.refreshToken) {
+    return res.error(401, "Refresh token is required");
+  }
 
   const newTokens = await authService.refreshToken(req.cookies.refreshToken, {
     ipAddress: req.ip,

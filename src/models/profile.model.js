@@ -2,6 +2,10 @@ module.exports = (sequelize, DataTypes) => {
   const Profile = sequelize.define(
     "Profile",
     {
+      userId: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+      },
       title: DataTypes.STRING(100),
       bio: DataTypes.TEXT,
       avatar: DataTypes.STRING(255),
