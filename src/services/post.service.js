@@ -1,8 +1,21 @@
-const { Post, Topic, sequelize } = require("@/models");
+const { User, Profile, Post, Topic, sequelize } = require("@/models");
 const { Op } = require("sequelize");
 
 exports.getAll = async (page = 1, limit = 10) => {
-  const posts = await Post.findAll({ limit, offset: (page - 1) * limit });
+  const posts = await Post.findAll({
+    limit,
+    offset: (page - 1) * limit,
+    include: {
+      model: User,
+      as: "User",
+      attributes: ["name", "username"],
+      include: {
+        model: Profile,
+        as: "Profile",
+        attributes: ["avatar"],
+      },
+    },
+  });
   return posts;
 };
 
