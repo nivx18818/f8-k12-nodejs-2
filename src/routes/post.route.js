@@ -4,7 +4,7 @@ const router = express.Router();
 const postController = require("@/controllers/post.controller");
 const postValidator = require("@/validators/post.validator");
 const commentController = require("@/controllers/comment.controller");
-const { Comment } = require("@/models");
+const { Comment, User, Profile } = require("@/models");
 
 router.get("/", postController.getList);
 router.post("/", postValidator.create, postController.create);
@@ -17,10 +17,49 @@ router.post("/:id/comments", commentController.createByPostId);
 
 module.exports = {
   subRouter: router,
-  include: {
-    model: Comment,
-    as: "Comments",
-    where: { parentId: null },
-    include: "Replies",
-  },
+  include: [
+    {
+      model: User,
+      as: "Likes",
+      attributes: ["id"],
+    },
+    {
+      model: Comment,
+      as: "Comments",
+      attributes: ["content"],
+      where: {
+        parentId: null,
+        status: "visible",
+      },
+      include: [
+        {
+          model: Comment,
+          as: "Replies",
+          required: false,
+          attributes: ["content"],
+          where: { status: "visible" },
+          include: {
+            model: User,
+            as: "User",
+            attributes: ["name", "username"],
+            include: {
+              model: Profile,
+              as: "Profile",
+              attributes: ["avatar"],
+            },
+          },
+        },
+        {
+          model: User,
+          as: "User",
+          attributes: ["name", "username"],
+          include: {
+            model: Profile,
+            as: "Profile",
+            attributes: ["avatar"],
+          },
+        },
+      ],
+    },
+  ],
 };

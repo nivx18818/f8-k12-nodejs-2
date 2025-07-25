@@ -1,18 +1,31 @@
-const { Comment } = require("@/models");
+const { Comment, User, Profile } = require("@/models");
 
-exports.getAll = async (page = 1, limit = 10) => {
-  const comments = await Comment.findAll({ limit, offset: (page - 1) * limit });
+exports.getAll = async () => {
+  const comments = await Comment.findAll();
   return comments;
 };
 
 exports.getById = async (id) => {
-  const comment = await Comment.findOne({ where: { id } });
+  const comment = await Comment.findOne({
+    where: { id },
+    include: {
+      model: User,
+      as: "User",
+      attributes: ["name", "username"],
+      include: {
+        model: Profile,
+        as: "Profile",
+        attributes: ["avatar"],
+      },
+    },
+  });
   return comment;
 };
 
 exports.create = async (data) => {
   const newComment = await Comment.create(data);
-  return newComment;
+  const comment = this.getById(newComment.id);
+  return comment;
 };
 
 exports.update = async (id, data) => {

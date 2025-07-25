@@ -20,10 +20,10 @@ fs.readdirSync(__dirname)
 
       switch (true) {
         case !!model.rawAttributes.slug:
-          whereConditions = [{ slug: id }];
+          whereConditions.push({ slug: id });
           break;
         case !!model.rawAttributes.username:
-          whereConditions = [{ username: id }];
+          whereConditions.push({ username: id });
           break;
       }
 
