@@ -14,6 +14,8 @@ router.patch("/:id", postValidator.update, postController.update);
 router.delete("/:id", postController.delete);
 
 router.post("/:id/comments", commentController.createByPostId);
+router.post("/:id/like", postController.like);
+router.post("/:id/unlike", postController.unlike);
 
 module.exports = {
   subRouter: router,
@@ -26,7 +28,7 @@ module.exports = {
     {
       model: Comment,
       as: "Comments",
-      attributes: ["content"],
+      attributes: ["content", "createdAt"],
       where: {
         parentId: null,
         status: "visible",

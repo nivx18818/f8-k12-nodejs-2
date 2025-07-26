@@ -69,3 +69,13 @@ exports.delete = async (id) => {
   });
   return deletedRows > 0;
 };
+
+exports.like = async (post, userId) => {
+  const like = await post.addLike(userId);
+  return !!like;
+};
+
+exports.unlike = async (post, userId) => {
+  const affectedRows = await post.removeLike(userId);
+  return affectedRows > 0;
+};

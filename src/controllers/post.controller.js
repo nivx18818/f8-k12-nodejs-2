@@ -1,5 +1,6 @@
-const postService = require("@/services/post.service");
 const asyncHandler = require("@/utils/async-handler.util");
+const postService = require("@/services/post.service");
+const jwtService = require("@/services/jwt.service");
 
 exports.getList = asyncHandler(async (req, res) => {
   const { page, limit } = req.query;
@@ -27,4 +28,22 @@ exports.update = asyncHandler(async (req, res) => {
 exports.delete = asyncHandler(async (req, res) => {
   await postService.delete(req.params.id);
   return res.success(204);
+});
+
+exports.like = asyncHandler(async (req, res) => {
+  const accessToken = req.cookies.accessToken;
+  const { userId } = jwtService.verify(accessToken);
+
+  const liked = await postService.like(req.post, userId);
+  if (liked) return res.success(204);
+  return res.error(400, "Failed to like the post");
+});
+
+exports.unlike = asyncHandler(async (req, res) => {
+  const accessToken = req.cookies.accessToken;
+  const { userId } = jwtService.verify(accessToken);
+
+  const unliked = await postService.unlike(req.post, userId);
+  if (unliked) return res.success(204);
+  return res.error(400, "Failed to unlike the post");
 });
