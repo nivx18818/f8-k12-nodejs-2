@@ -22,6 +22,16 @@ module.exports = {
   include: [
     {
       model: User,
+      as: "User",
+      attributes: ["name", "username"],
+      include: {
+        model: Profile,
+        as: "Profile",
+        attributes: ["avatar"],
+      },
+    },
+    {
+      model: User,
       as: "Likes",
       attributes: ["id"],
     },
