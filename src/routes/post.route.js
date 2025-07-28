@@ -4,6 +4,7 @@ const router = express.Router();
 const postController = require("@/controllers/post.controller");
 const postValidator = require("@/validators/post.validator");
 const commentController = require("@/controllers/comment.controller");
+const authGuard = require("@/middlewares/auth-guard.middleware");
 const { Comment, User, Profile } = require("@/models");
 
 router.get("/", postController.getList);
@@ -13,9 +14,9 @@ router.put("/:id", postValidator.update, postController.update);
 router.patch("/:id", postValidator.update, postController.update);
 router.delete("/:id", postController.delete);
 
-router.post("/:id/comments", commentController.createByPostId);
-router.post("/:id/like", postController.like);
-router.post("/:id/unlike", postController.unlike);
+router.post("/:id/comments", authGuard, commentController.createByPostId);
+router.post("/:id/like", authGuard, postController.like);
+router.post("/:id/unlike", authGuard, postController.unlike);
 
 module.exports = {
   subRouter: router,
