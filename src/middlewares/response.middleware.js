@@ -35,13 +35,21 @@ const response = (req, res, next) => {
     return res.success(204);
   };
 
-  res.error = (status, message, err) => {
-    if (err && process.env.NODE_ENV === "development") console.error(err);
+  res.error = (status, message, details, err) => {
+    if (err && process.env.NODE_ENV === "development") {
+      console.error(err);
+    }
 
-    return res.status(status ?? 500).json({
+    const response = {
       success: false,
       message: message ?? err?.toString(),
-    });
+    };
+
+    if (details) {
+      response.details = details;
+    }
+
+    return res.status(status ?? 500).json(response);
   };
 
   next();

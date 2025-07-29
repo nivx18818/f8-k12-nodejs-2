@@ -7,12 +7,12 @@ const handleValidationError = (req, res, next) => {
     return next();
   }
 
-  res.json({
-    errors: errors.array().map((error) => ({
-      field: error.path,
-      message: error.msg,
-    })),
-  });
+  const validationErrors = errors.array().map((error) => ({
+    field: error.path,
+    message: error.msg,
+  }));
+
+  res.error(400, "Validation failed", validationErrors);
 };
 
 module.exports = handleValidationError;
