@@ -51,7 +51,6 @@ exports.refreshToken = async (token, data) => {
 exports.logout = async (token) => {
   const isSuccessful = await refreshTokenService.revoke(token);
   if (!isSuccessful) return false;
-
   return true;
 };
 

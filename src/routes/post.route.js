@@ -8,11 +8,11 @@ const authGuard = require("@/middlewares/auth-guard.middleware");
 const { Comment, User, Profile } = require("@/models");
 
 router.get("/", postController.getList);
-router.post("/", postValidator.create, postController.create);
+router.post("/", authGuard, postValidator.create, postController.create);
 router.get("/:id", postController.getById);
-router.put("/:id", postValidator.update, postController.update);
-router.patch("/:id", postValidator.update, postController.update);
-router.delete("/:id", postController.delete);
+router.put("/:id", authGuard, postValidator.update, postController.update);
+router.patch("/:id", authGuard, postValidator.update, postController.update);
+router.delete("/:id", authGuard, postController.delete);
 
 router.post("/:id/comments", authGuard, commentController.createByPostId);
 router.post("/:id/like", authGuard, postController.like);
@@ -39,6 +39,7 @@ module.exports = {
     {
       model: Comment,
       as: "Comments",
+      required: false,
       attributes: ["content", "createdAt"],
       where: {
         parentId: null,

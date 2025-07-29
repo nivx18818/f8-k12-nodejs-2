@@ -1,10 +1,7 @@
 const { checkSchema } = require("express-validator");
 const handleValidationError = require("@/middlewares/handle-validation-error.middleware");
 
-const createValidator = (
-  baseSchema,
-  options = { includes: [], excludes: [], required: [], optional: [] }
-) => {
+const createValidator = (baseSchema, options = {}) => {
   const { includes = [], excludes = [], required = [], optional = [] } = options;
 
   let schemaFields = Object.keys(baseSchema);

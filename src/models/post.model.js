@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       coverImage: {
         type: DataTypes.STRING(255),
-        allowNull: false,
+        // allowNull: false,
       },
       content: {
         type: DataTypes.TEXT,
@@ -49,10 +49,11 @@ module.exports = (sequelize, DataTypes) => {
         },
       ],
       hooks: {
-        beforeCreate: (post) => {
-          if (post.title && post.changed("title")) {
-            post.slug = generateSlug(post.id, post.title);
-          }
+        afterCreate: (post) => {
+          setImmediate(async () => {
+            const slug = generateSlug(post.id, post.title);
+            await post.update({ slug }, { hooks: false });
+          });
         },
       },
     }

@@ -15,7 +15,7 @@ exports.getByTopicId = asyncHandler(async (req, res) => {
 exports.getById = (req, res) => res.success(200, req.post);
 
 exports.create = asyncHandler(async (req, res) => {
-  const newPost = await postService.create(req.body);
+  const newPost = await postService.create({ ...req.body, userId: req.user.id });
   return res.success(201, newPost);
 });
 

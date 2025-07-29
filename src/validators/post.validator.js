@@ -27,7 +27,7 @@ const postSchema = {
 module.exports = {
   create: createValidator(postSchema, {
     required: "all",
-    optional: ["status", "visibility"],
+    optional: ["coverImage", "status", "visibility"],
   }),
   update: createValidator(postSchema),
 };
