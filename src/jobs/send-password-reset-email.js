@@ -1,4 +1,3 @@
-const transporter = require("@/config/mailer");
 const emailService = require("@/emails/email-service");
 const jwtService = require("@/services/jwt.service");
 const userService = require("@/services/user.service");
@@ -10,17 +9,7 @@ const sendPasswordResetEmail = async (job) => {
   const token = jwtService.sign(userId);
   const resetUrl = `${process.env.APP_ORIGIN}/reset-password?token=${token}`;
 
-  const emailTemplate = await emailService.loadEmail("reset-password", {
-    user,
-    resetUrl,
-  });
-
-  await transporter.sendMail({
-    from: process.env.MAIL_SENDER,
-    to: process.env.MAIL_RECEIVER_SAMPLE, // user.email
-    subject: "Password Reset Request",
-    html: emailTemplate,
-  });
+  await emailService.sendMail("reset-password", "Password Reset Request", user, { resetUrl });
 };
 
 module.exports = sendPasswordResetEmail;

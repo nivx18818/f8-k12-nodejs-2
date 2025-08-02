@@ -3,22 +3,15 @@ const emailService = require("@/emails/email-service");
 const userService = require("@/services/user.service");
 
 const sendPasswordChangedNotification = async (job) => {
-  const { userId } = job.payload;
-  const user = await userService.getById(userId);
-
+  const user = await userService.getById(job.payload.userId);
   const loginUrl = `${process.env.APP_ORIGIN}/login`;
 
-  const emailTemplate = await emailService.loadEmail("password-changed", {
+  await emailService.sendMail(
+    "password-changed",
+    `Password Changed Notification for ${user.name}`,
     user,
-    loginUrl,
-  });
-
-  await transporter.sendMail({
-    from: process.env.MAIL_SENDER,
-    to: user.email,
-    subject: `Password Changed Notification for ${user.name}`,
-    html: emailTemplate,
-  });
+    { loginUrl }
+  );
 };
 
 module.exports = sendPasswordChangedNotification;
