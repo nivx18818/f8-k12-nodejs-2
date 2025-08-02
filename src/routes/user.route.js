@@ -13,5 +13,5 @@ router.delete("/:id", userController.delete);
 
 module.exports = {
   subRouter: router,
-  include: ["Profile", "Skills"],
+  include: ["profile", "skills"],
 };

@@ -16,5 +16,5 @@ router.get("/:id/posts", postController.getByTopicId);
 
 module.exports = {
   subRouter: router,
-  include: "Posts",
+  include: "posts",
 };

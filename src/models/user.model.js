@@ -48,6 +48,7 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = (models) => {
     User.hasOne(models.Profile, {
+      as: "profile",
       onDelete: "CASCADE",
       foreignKey: {
         name: "userId",
@@ -61,6 +62,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     });
     User.hasMany(models.Post, {
+      as: "posts",
       onDelete: "CASCADE",
       foreignKey: {
         name: "userId",
@@ -68,6 +70,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     });
     User.hasMany(models.Comment, {
+      as: "comments",
       foreignKey: "userId",
     });
     User.belongsToMany(models.Post, {
@@ -86,6 +89,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     User.belongsToMany(models.Skill, {
       through: "user_skill",
+      as: "skills",
       foreignKey: {
         name: "userId",
         allowNull: false,

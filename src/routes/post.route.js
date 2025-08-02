@@ -23,22 +23,22 @@ module.exports = {
   include: [
     {
       model: User,
-      as: "User",
+      as: "user",
       attributes: ["name", "username"],
       include: {
         model: Profile,
-        as: "Profile",
+        as: "profile",
         attributes: ["avatar"],
       },
     },
     {
       model: User,
-      as: "Likes",
+      as: "likes",
       attributes: ["id"],
     },
     {
       model: Comment,
-      as: "Comments",
+      as: "comments",
       required: false,
       attributes: ["content", "createdAt"],
       where: {
@@ -48,28 +48,28 @@ module.exports = {
       include: [
         {
           model: Comment,
-          as: "Replies",
+          as: "replies",
           required: false,
           attributes: ["content"],
           where: { status: "visible" },
           include: {
             model: User,
-            as: "User",
+            as: "user",
             attributes: ["name", "username"],
             include: {
               model: Profile,
-              as: "Profile",
+              as: "profile",
               attributes: ["avatar"],
             },
           },
         },
         {
           model: User,
-          as: "User",
+          as: "user",
           attributes: ["name", "username"],
           include: {
             model: Profile,
-            as: "Profile",
+            as: "profile",
             attributes: ["avatar"],
           },
         },

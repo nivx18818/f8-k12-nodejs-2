@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Comment.associate = (models) => {
     Comment.belongsTo(models.User, {
+      as: "user",
       foreignKey: "userId",
     });
     Comment.belongsTo(models.Post, {
@@ -35,11 +36,11 @@ module.exports = (sequelize, DataTypes) => {
       },
     });
     Comment.hasMany(models.Comment, {
-      as: "Replies",
+      as: "replies",
       foreignKey: "parentId",
     });
     Comment.belongsTo(models.Comment, {
-      as: "Parent",
+      as: "parent",
       foreignKey: "parentId",
     });
   };
