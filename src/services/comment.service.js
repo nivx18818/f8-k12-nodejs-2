@@ -10,11 +10,11 @@ exports.getById = async (id) => {
     where: { id },
     include: {
       model: User,
-      as: "User",
+      as: "user",
       attributes: ["name", "username"],
       include: {
         model: Profile,
-        as: "Profile",
+        as: "profile",
         attributes: ["avatar"],
       },
     },

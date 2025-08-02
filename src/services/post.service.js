@@ -7,11 +7,11 @@ exports.getAll = async (page = 1, limit = 10) => {
     offset: (page - 1) * limit,
     include: {
       model: User,
-      as: "User",
+      as: "user",
       attributes: ["name", "username"],
       include: {
         model: Profile,
-        as: "Profile",
+        as: "profile",
         attributes: ["avatar"],
       },
     },

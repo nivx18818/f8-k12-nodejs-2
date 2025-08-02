@@ -10,7 +10,7 @@ exports.getById = async (id) => {
   const user = await User.findOne({
     where: { id },
     attributes: { exclude: ["password"] },
-    include: ["Profile"],
+    include: ["profile"],
   });
   return user;
 };
@@ -19,7 +19,7 @@ exports.getByUsername = async (username) => {
   const user = await User.findOne({
     where: { username },
     attributes: { exclude: ["password"] },
-    include: ["Profile"],
+    include: ["profile"],
   });
   return user;
 };
@@ -28,7 +28,7 @@ exports.getByEmail = async (email) => {
   const user = await User.findOne({
     where: { email },
     attributes: { exclude: ["password"] },
-    include: ["Profile"],
+    include: ["profile"],
   });
   return user;
 };
