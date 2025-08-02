@@ -1,18 +1,6 @@
 const createValidator = require("@/utils/create-validator.util");
 
-const loginSchema = {
-  email: {
-    isEmail: "Email must be a valid email address",
-  },
-  password: {
-    isLength: {
-      options: { min: 8, max: 100 },
-      errorMessage: "Password must be at least 8 characters long",
-    },
-  },
-};
-
-const registerSchema = {
+const authSchema = {
   name: {
     isLength: {
       options: { max: 100 },
@@ -34,30 +22,13 @@ const registerSchema = {
       errorMessage: "Password must be at least 8 characters long",
     },
   },
-};
-
-const forgotPasswordSchema = {
-  email: {
-    isEmail: "Email must be a valid email address",
-  },
-};
-
-const resetPasswordSchema = {
   token: {},
-  password: {
+  currentPassword: {
     isLength: {
       options: { min: 8, max: 100 },
       errorMessage: "Password must be at least 8 characters long",
     },
   },
-};
-
-const verifyEmailSchema = {
-  token: {},
-};
-
-const changePasswordSchema = {
-  currentPassword: {},
   newPassword: {
     isLength: {
       options: { min: 8, max: 100 },
@@ -67,10 +38,28 @@ const changePasswordSchema = {
 };
 
 module.exports = {
-  login: createValidator(loginSchema, { required: "all" }),
-  register: createValidator(registerSchema, { required: "all" }),
-  forgotPassword: createValidator(forgotPasswordSchema, { required: "all" }),
-  resetPassword: createValidator(resetPasswordSchema, { required: "all" }),
-  verifyEmail: createValidator(verifyEmailSchema, { required: "all" }),
-  changePassword: createValidator(changePasswordSchema, { required: "all" }),
+  login: createValidator(authSchema, {
+    includes: ["email", "password"],
+    required: "all",
+  }),
+  register: createValidator(authSchema, {
+    excludes: ["token", "currentPassword", "newPassword"],
+    required: "all",
+  }),
+  forgotPassword: createValidator(authSchema, {
+    includes: ["email"],
+    required: "all",
+  }),
+  resetPassword: createValidator(authSchema, {
+    includes: ["password", "token"],
+    required: "all",
+  }),
+  verifyEmail: createValidator(authSchema, {
+    includes: ["token"],
+    required: "all",
+  }),
+  changePassword: createValidator(authSchema, {
+    includes: ["currentPassword", "newPassword"],
+    required: "all",
+  }),
 };

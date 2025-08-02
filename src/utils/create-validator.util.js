@@ -7,7 +7,7 @@ const createValidator = (baseSchema, options = {}) => {
   let schemaFields = Object.keys(baseSchema);
 
   if (includes.length) {
-    schemaFields.filter((key) => includes.includes(key));
+    schemaFields = schemaFields.filter((key) => includes.includes(key));
   }
 
   const schema = schemaFields
