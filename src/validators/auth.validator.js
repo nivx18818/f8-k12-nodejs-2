@@ -51,7 +51,7 @@ module.exports = {
     required: "all",
   }),
   resetPassword: createValidator(authSchema, {
-    includes: ["password", "token"],
+    includes: ["newPassword", "token"],
     required: "all",
   }),
   verifyEmail: createValidator(authSchema, {

@@ -11,7 +11,7 @@ exports.login = async ({ email, password, ...rest }) => {
 
   if (!isValid) return null;
 
-  const accessToken = jwtService.sign(user.id);
+  const accessToken = jwtService.sign({ userId: user.id });
   const refreshToken = await generateRefreshToken({ userId: user.id, ...rest });
 
   return [accessToken, refreshToken];
@@ -35,7 +35,7 @@ exports.refreshToken = async (token, data) => {
     return null;
   }
 
-  const newAccessToken = jwtService.sign(refreshToken.userId);
+  const newAccessToken = jwtService.sign({ userId: refreshToken.userId });
 
   const isSuccessful = await refreshTokenService.revoke(refreshToken.token);
   if (!isSuccessful) return null;
@@ -54,17 +54,23 @@ exports.logout = async (token) => {
   return true;
 };
 
-exports.forgotPassword = async (email) => {
+exports.forgotPassword = async (email, data) => {
   const user = await userService.getByEmail(email);
   if (!user) return;
-  queueService.dispatch("sendPasswordResetEmail", { userId: user.id });
+  queueService.dispatch("sendPasswordResetEmail", { userId: user.id, ...data });
 };
 
-exports.resetPassword = async (token, newPassword) => {
-  const { userId } = jwtService.verify(token);
-  const updatedUser = await userService.update(userId, { password: newPassword });
+exports.resetPassword = async (token, { ipAddress, userAgent, newPassword }) => {
+  const payload = jwtService.verify(token);
+
+  if (ipAddress !== payload.ipAddress || userAgent !== payload.userAgent) {
+    return false;
+  }
+
+  const updatedUser = await userService.update(payload.userId, { password: newPassword });
   if (!updatedUser) return false;
-  queueService.dispatch("sendPasswordChangedNotification", { userId });
+
+  queueService.dispatch("sendPasswordChangedNotification", { userId: payload.userId });
   return true;
 };
 

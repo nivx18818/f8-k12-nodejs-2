@@ -51,15 +51,22 @@ exports.logout = asyncHandler(async (req, res) => {
 });
 
 exports.forgotPassword = asyncHandler(async (req, res) => {
-  await authService.forgotPassword(req.body.email);
+  await authService.forgotPassword(req.body.email, {
+    ipAddress: req.ip,
+    userAgent: req.headers["user-agent"],
+  });
   return res.success(204);
 });
 
 exports.resetPassword = asyncHandler(async (req, res) => {
-  const isSuccessful = await authService.resetPassword(req.body.token, req.body.password);
+  const isSuccessful = await authService.resetPassword(req.body.token, {
+    ipAddress: req.ip,
+    userAgent: req.headers["user-agent"],
+    newPassword: req.body.newPassword,
+  });
 
   if (!isSuccessful) {
-    return res.error(400, "Invalid or expired password reset token");
+    return res.error(400, "Invalid or expired reset token");
   }
 
   return res.success(204);
