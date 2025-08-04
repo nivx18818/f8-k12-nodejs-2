@@ -81,3 +81,13 @@ exports.verifyEmail = async (token) => {
   queueService.dispatch("sendVerificationEmail", { userId });
   return true;
 };
+
+exports.resendVerification = async (email) => {
+  const user = userService.getByEmail(email);
+  queueService.dispatch("sendVerificationEmail", { userId: user.id });
+};
+
+exports.resendReset = async (email) => {
+  const user = userService.getByEmail(email);
+  queueService.dispatch("sendPasswordResetEmail", { userId: user.id });
+};

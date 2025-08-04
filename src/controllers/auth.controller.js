@@ -81,3 +81,13 @@ exports.verifyEmail = asyncHandler(async (req, res) => {
 
   return res.success(204);
 });
+
+exports.resendVerification = asyncHandler(async (req, res) => {
+  await authService.resendVerification(req.body.email);
+  return res.success(204);
+});
+
+exports.resendReset = asyncHandler(async (req, res) => {
+  await authService.resendReset(req.body.email);
+  return res.success(204);
+});
