@@ -29,3 +29,15 @@ exports.delete = asyncHandler(async (req, res) => {
   await commentService.delete(req.params.id);
   return res.success(204);
 });
+
+exports.like = asyncHandler(async (req, res) => {
+  const liked = await comment.like(req.comment, req.user.id);
+  if (liked) return res.success(204);
+  return res.error(400, "Failed to like the comment");
+});
+
+exports.unlike = asyncHandler(async (req, res) => {
+  const unliked = await comment.unlike(req.comment, req.user.id);
+  if (unliked) return res.success(204);
+  return res.error(400, "Failed to unlike the comment");
+});

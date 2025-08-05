@@ -43,3 +43,13 @@ exports.delete = async (id) => {
   const deletedRows = await Comment.destroy({ where: { id } });
   return deletedRows > 0;
 };
+
+exports.like = async (comment, userId) => {
+  const like = await comment.addLike(userId);
+  return !!like;
+};
+
+exports.unlike = async (comment, userId) => {
+  const affectedRows = await comment.removeLike(userId);
+  return affectedRows > 0;
+};
