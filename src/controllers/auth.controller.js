@@ -62,7 +62,7 @@ exports.resetPassword = asyncHandler(async (req, res) => {
   const isSuccessful = await authService.resetPassword(req.body.token, {
     ipAddress: req.ip,
     userAgent: req.headers["user-agent"],
-    newPassword: req.body.newPassword,
+    newPassword: req.body.password,
   });
 
   if (!isSuccessful) {
