@@ -12,7 +12,7 @@ router.put("/:id", commentValidator.update, commentController.update);
 router.patch("/:id", commentValidator.update, commentController.update);
 router.delete("/:id", commentController.delete);
 
-route.post("/:id/like", authGuard, commentController.like);
-route.post("/:id/unlike", authGuard, commentController.unlike);
+router.post("/:id/like", authGuard, commentController.like);
+router.post("/:id/unlike", authGuard, commentController.unlike);
 
 module.exports = { subRouter: router };
