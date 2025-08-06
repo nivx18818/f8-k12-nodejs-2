@@ -1,7 +1,7 @@
 {
   "name": "f8-k12-nodejs-2",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "./src/server.js",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
@@ -12,6 +12,7 @@
     "express-validator": "^7.2.1",
     "jsonwebtoken": "^9.0.2",
     "module-alias": "^2.2.3",
+    "multer": "^2.0.2",
     "mysql2": "^3.14.1",
     "nodemailer": "^7.0.5",
     "sequelize": "^6.37.7",
@@ -25,10 +26,10 @@
     "@": "./src"
   },
   "scripts": {
-    "dev": "node --watch server.js",
+    "dev": "node --watch ./src/server.js",
     "queue": "node --watch ./src/workers/queue-processor.worker.js",
     "schedule": "node --watch ./src/utils/scheduler.js",
-    "start": "node server.js",
+    "start": "node ./src/server.js",
     "db:migrate": "sequelize-cli db:migrate",
     "db:migrate:undo:all": "sequelize-cli db:migrate:undo:all",
     "db:seed": "sequelize-cli db:seed",
