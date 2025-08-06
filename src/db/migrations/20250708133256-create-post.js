@@ -30,12 +30,8 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false,
       },
-      cover_image: {
-        type: Sequelize.STRING(255),
-        allowNull: false,
-      },
       content: {
-        type: Sequelize.TEXT,
+        type: Sequelize.JSON,
         allowNull: false,
       },
       status: {

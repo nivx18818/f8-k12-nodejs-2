@@ -1,5 +1,4 @@
 const generateSlug = require("@/utils/generate-slug.util");
-const { default: slugify } = require("slugify");
 
 module.exports = (sequelize, DataTypes) => {
   const Post = sequelize.define(
@@ -17,12 +16,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
-      coverImage: {
-        type: DataTypes.STRING(255),
-        // allowNull: false,
-      },
       content: {
-        type: DataTypes.TEXT,
+        type: DataTypes.JSON,
         allowNull: false,
       },
       status: {
