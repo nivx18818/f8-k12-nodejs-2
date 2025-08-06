@@ -43,11 +43,8 @@ const response = (req, res, next) => {
     const response = {
       success: false,
       message: message ?? err?.toString(),
+      details: details ?? null,
     };
-
-    if (details) {
-      response.details = details;
-    }
 
     return res.status(status ?? 500).json(response);
   };
