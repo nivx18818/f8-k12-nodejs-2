@@ -24,6 +24,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded());
 
+app.use("/uploads", express.static("uploads"));
 app.use(response);
 app.use("/api/v1", sequelizeAuthenticate, mainRouter);
 app.use(handleError);
