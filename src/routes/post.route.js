@@ -1,17 +1,31 @@
 const express = require("express");
 const router = express.Router();
 
-const postController = require("@/controllers/post.controller");
-const postValidator = require("@/validators/post.validator");
-const commentController = require("@/controllers/comment.controller");
-const authGuard = require("@/middlewares/auth-guard.middleware");
+const generateUpload = require("@/utils/generate-upload");
 const { Comment, User, Profile } = require("@/models");
 
+const postController = require("@/controllers/post.controller");
+const commentController = require("@/controllers/comment.controller");
+const authGuard = require("@/middlewares/auth-guard.middleware");
+const processContent = require("@/middlewares/process-content.middleware");
+const cleanupUploadedImages = require("@/middlewares/cleanup-uploaded-files");
+const postValidator = require("@/validators/post.validator");
+
+const upload = generateUpload("posts");
+
+const generateCommonMiddlewares = (type) => [
+  authGuard,
+  upload.array("image"),
+  postValidator[type],
+  processContent,
+  cleanupUploadedImages,
+];
+
 router.get("/", postController.getList);
-router.post("/", authGuard, postValidator.create, postController.create);
+router.post("/", generateCommonMiddlewares("create"), postController.create);
 router.get("/:id", postController.getById);
-router.put("/:id", authGuard, postValidator.update, postController.update);
-router.patch("/:id", authGuard, postValidator.update, postController.update);
+router.put("/:id", generateCommonMiddlewares("update"), postController.update);
+router.patch("/:id", generateCommonMiddlewares("update"), postController.update);
 router.delete("/:id", authGuard, postController.delete);
 
 router.post("/:id/comments", authGuard, commentController.createByPostId);

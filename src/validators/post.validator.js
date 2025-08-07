@@ -8,8 +8,9 @@ const postSchema = {
     },
   },
   description: {},
-  coverImage: {},
-  content: {},
+  content: {
+    isJSON: "Content must be a valid JSON string",
+  },
   status: {
     isIn: {
       options: [["published", "draft"]],
