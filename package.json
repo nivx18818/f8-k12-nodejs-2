@@ -1,7 +1,7 @@
 {
   "name": "f8-k12-nodejs-2",
   "version": "1.0.0",
-  "main": "./src/server.js",
+  "main": "server.js",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
@@ -26,10 +26,10 @@
     "@": "./src"
   },
   "scripts": {
-    "dev": "node --watch ./src/server.js",
+    "dev": "node --watch server.js",
     "queue": "node --watch ./src/workers/queue-processor.worker.js",
     "schedule": "node --watch ./src/utils/scheduler.js",
-    "start": "node ./src/server.js",
+    "start": "node server.js",
     "db:migrate": "sequelize-cli db:migrate",
     "db:migrate:undo:all": "sequelize-cli db:migrate:undo:all",
     "db:seed": "sequelize-cli db:seed",
