@@ -1,7 +1,7 @@
 "use strict";
 
-const { default: generateId } = require("@/utils/generate-id.util");
 const { default: slugify } = require("slugify");
+const generateId = require("@/utils/generate-id.util");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
