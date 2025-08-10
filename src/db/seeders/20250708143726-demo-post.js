@@ -17,7 +17,7 @@ module.exports = {
           {
             type: "text",
             content:
-              "This is the content of post ${i}. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+              `This is the content of post ${i}. Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
           },
           { type: "image", src: `https://picsum.photos/seed/post${i}/800/400` },
           {
