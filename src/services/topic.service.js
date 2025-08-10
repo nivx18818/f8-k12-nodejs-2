@@ -1,7 +1,13 @@
-const { Topic } = require("@/models");
+const { Topic, Post } = require("@/models");
 
 exports.getAll = async () => {
-  const topics = await Topic.findAll();
+  const topics = await Topic.findAll({
+    include: {
+      model: Post,
+      as: "posts",
+      attributes: ["id"],
+    },
+  });
   return topics;
 };
 

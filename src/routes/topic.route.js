@@ -5,6 +5,8 @@ const topicController = require("@/controllers/topic.controller");
 const topicValidator = require("@/validators/topic.validator");
 const postController = require("@/controllers/post.controller");
 
+const { Post, User, Profile, Comment } = require("@/models");
+
 router.get("/", topicController.getAll);
 router.post("/", topicValidator.create, topicController.create);
 router.get("/:id", topicController.getById);
@@ -16,5 +18,30 @@ router.get("/:id/posts", postController.getByTopicId);
 
 module.exports = {
   subRouter: router,
-  include: "posts",
+  include: {
+    model: Post,
+    as: "posts",
+    include: [
+      {
+        model: User,
+        as: "user",
+        attributes: ["name", "username"],
+        include: {
+          model: Profile,
+          as: "profile",
+          attributes: ["avatar"],
+        },
+      },
+      {
+        model: User,
+        as: "likes",
+        attributes: ["id"],
+      },
+      {
+        model: Comment,
+        as: "comments",
+        attributes: ["id"],
+      },
+    ],
+  },
 };
