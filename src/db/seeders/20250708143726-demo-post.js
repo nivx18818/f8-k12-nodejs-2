@@ -1,5 +1,6 @@
 "use strict";
 
+const { default: generateId } = require("@/utils/generate-id.util");
 const { default: slugify } = require("slugify");
 
 /** @type {import('sequelize-cli').Migration} */
@@ -15,12 +16,17 @@ module.exports = {
         description: `This is the description of post ${i}.`,
         content: JSON.stringify([
           {
+            id: generateId(),
             type: "text",
-            content:
-              `This is the content of post ${i}. Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
+            content: `This is the content of post ${i}. Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
           },
-          { type: "image", src: `https://picsum.photos/seed/post${i}/800/400` },
           {
+            id: generateId(),
+            type: "image",
+            src: `https://picsum.photos/seed/post${i}/800/400`,
+          },
+          {
+            id: generateId(),
             type: "text",
             content:
               "Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.",
