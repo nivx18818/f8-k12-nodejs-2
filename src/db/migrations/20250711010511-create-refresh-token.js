@@ -27,7 +27,7 @@ module.exports = {
         allowNull: false,
       },
       ip_address: {
-        type: Sequelize.STRING(15),
+        type: Sequelize.STRING(45),
         allowNull: false,
       },
       user_agent: {
