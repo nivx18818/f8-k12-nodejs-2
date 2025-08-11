@@ -2,7 +2,8 @@ const response = (req, res, next) => {
   const cookieOptions = {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "Strict",
+    sameSite: "None",
+    secure: true,
     path: "/",
   };
 
